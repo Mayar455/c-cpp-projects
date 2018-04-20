@@ -1,0 +1,13 @@
+int size.
+sum.
+move 5 to size.
+loop size times
+[ out size, newline.
+  add size to sum.
+]
+out newline, “Sum:”, sum.
+{sonuc burada}
+int no1.
+int no2.
+add no1 to no2.
+sub no1 from no2.

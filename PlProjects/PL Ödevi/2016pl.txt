@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void uzanti_ekleme(char *, char *, int ,int );
+
+int main()
+{
+    FILE *yaz_dos, *oku_dos;
+
+    int i,j;
+    char girilen_isim[50], okunan_dosya_ismi[54], yazdirilan_dosya_ismi[54], ch;
+    char passtr[5] = ".pas", lexstr[5] = ".lex";
+
+    char komutlar[26][15] = {"and", "begin;", "case", "const", "div", "do", "downto", "else", "end;", "end.", "for", "if", "mod", "not", "of", "or",
+                        "program", "repeat", "string", "then", "to", "until", "uses", "var", "while", "xor"};
+    char aciklama[26][55] = {"Boolean Operator", "Beginning of a code block", "Conditional Statement", "Declaration of Constants",
+                          "Arithmetic Operator", "Performs the commands in Loops", "Counts down in for..do loops", "Otherwise, command in Conditional Statements",
+                          "End of a code block","End of a code block", "Loop", "Conditional Statement", "Arithmetic Operator", "Boolean Operator",
+                          "Specifies each case of a case statement", "Boolean Operator", "Specifies the program's name", "Loop",
+                          "Data type", "Performs the commands in If statements", "Counts up in for..do loops", "Specifies the break condition of the repeat..until loop",
+                          "Includes units", "Declaration of Variables", "Loop", "Boolean Operator"};
+
+    printf("Dosyanin adini giriniz: ");
+    scanf("%s",girilen_isim);
+
+    int girilen_uzunluk = strlen(girilen_isim);
+    strncpy(okunan_dosya_ismi,girilen_isim,girilen_uzunluk);
+    uzanti_ekleme(okunan_dosya_ismi, passtr, strlen(girilen_isim), strlen(passtr));
+
+    strncpy(yazdirilan_dosya_ismi,girilen_isim,girilen_uzunluk);
+    uzanti_ekleme(yazdirilan_dosya_ismi, lexstr, strlen(girilen_isim), strlen(lexstr));
+
+
+    if((oku_dos = fopen(okunan_dosya_ismi,"r")) == NULL)
+        printf("Dosya bulunamadý..!\n");
+    else{
+        yaz_dos = fopen(yazdirilan_dosya_ismi,"w");
+        printf("Lexical Analyzer for the %s file:\n\nThe list of tokens:\n",okunan_dosya_ismi);
+        printf("Token         Type\n");
+        printf("-----------   ---------------------\n");
+        fseek(oku_dos,0,SEEK_SET);
+        fseek(yaz_dos,0,SEEK_SET);
+        fprintf(yaz_dos, "Lexical Analyzer for the %s file:\n\nThe list of tokens:\n",okunan_dosya_ismi);
+        fprintf(yaz_dos, "Token         Type\n-----------   ---------------------\n");
+        while(!feof(oku_dos)){
+            char str[50] ="";
+            ch = fgetc(oku_dos);
+            for(i=0;!feof(oku_dos) && ch != '\n' && ch!=':' && ch!= ' '; i++){
+                while(ch == 39){
+                   ch = fgetc(oku_dos);
+                   while(ch!=39)
+                        ch = fgetc(oku_dos);
+                   ch = fgetc(oku_dos);
+                }
+                str[i] = ch;
+                ch = fgetc(oku_dos);
+                for(j=0; j<26; j++){
+                    if(strcmp(str, komutlar[j])==0){
+                        printf("%-13s %s\n", str, aciklama[j]);
+                        fprintf(yaz_dos, "%-13s %s\n",str, aciklama[j]);
+                        strcpy(str, "");
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    system("pause");
+    return 0;
+}
+void uzanti_ekleme(char *hedef, char *kaynak, int uzunluk, int kaynak_uzunlugu){
+
+    int i;
+    for(i=0; i<uzunluk; i++){
+        hedef++;
+    }
+    for(i=0; i<kaynak_uzunlugu; i++){
+        *hedef = *kaynak;
+        kaynak++;
+        hedef++;
+    }
+    *hedef = '\0';
+}

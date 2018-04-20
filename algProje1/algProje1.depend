@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1447533836 source:c:\users\saifullah\desktop\algproje1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+

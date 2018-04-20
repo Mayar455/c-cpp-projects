@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1494799530 source:c:\users\saifullah\desktop\pl ödevi\project1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<conio.h>
+
+1494842465 source:c:\users\saifullah\desktop\pl ödevi\0512-826_saifullah_nasrullah\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<conio.h>
+
